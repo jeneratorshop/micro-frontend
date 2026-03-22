@@ -1,26 +1,38 @@
-import lazyRemote from './lazyRemote';
+let remoteRouteRegistryPromise;
 
-export const RemoteAuthProvider = lazyRemote(
-  () => import('remote_shell/AuthProvider'),
-  'AuthProvider',
-);
+function resolveRemoteExport(module, exportName) {
+  return module[exportName] ?? module.default?.[exportName] ?? module.default;
+}
 
-export const RemoteNavbar = lazyRemote(
-  () => import('remote_shell/Navbar'),
-  'Navbar',
-);
+function normalizeRouteEntries(routeEntries) {
+  if (!Array.isArray(routeEntries)) {
+    throw new Error('Remote route registry bir dizi olmali.');
+  }
 
-export const RemoteSidebar = lazyRemote(
-  () => import('remote_shell/Sidebar'),
-  'Sidebar',
-);
+  return routeEntries.map((entry, index) => {
+    if (!entry?.component || !entry?.path || !entry?.label) {
+      throw new Error(`Remote route entry gecersiz: ${index}`);
+    }
 
-export const RemoteSignInPanel = lazyRemote(
-  () => import('remote_shell/AuthWidgets'),
-  'SignInPanel',
-);
+    return {
+      description: '',
+      sectionTitle: 'Remote Content',
+      ...entry,
+    };
+  });
+}
 
-export const RemoteAuthStatusCard = lazyRemote(
-  () => import('remote_shell/AuthWidgets'),
-  'AuthStatusCard',
-);
+export function loadRemoteRouteRegistry() {
+  if (!remoteRouteRegistryPromise) {
+    remoteRouteRegistryPromise = import('remote_content/RouteRegistry')
+      .then((module) =>
+        normalizeRouteEntries(resolveRemoteExport(module, 'remoteRouteRegistry')),
+      )
+      .catch((error) => {
+        remoteRouteRegistryPromise = null;
+        throw error;
+      });
+  }
+
+  return remoteRouteRegistryPromise;
+}

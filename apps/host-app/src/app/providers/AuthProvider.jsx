@@ -29,15 +29,19 @@ export function AuthProvider({ children }) {
     setError('');
   };
 
-  const value = {
-    isAuthenticated: Boolean(user),
-    user,
-    error,
-    signIn,
-    signOut,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        error,
+        isAuthenticated: Boolean(user),
+        signIn,
+        signOut,
+        user,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

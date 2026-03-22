@@ -29,13 +29,13 @@ export default function HostRoadmapPage() {
         />
         <OverviewCard
           title="2. Auth"
-          description="Login ve oturum yonetimini remote app'te tut."
-          detail="Host sadece provider ve widgetlari kullanir."
+          description="Login ve oturum yonetimini host app'te tut."
+          detail="Tum shell davranisi tek noktadan kontrol edilir."
         />
         <OverviewCard
           title="3. Domain"
-          description="Gercek is sayfalarini host'a ekle."
-          detail="Ornegin `/host/orders`, `/host/customers`, `/host/reports`."
+          description="Remote sadece kendi content modullerini eklesin."
+          detail="Ornegin yeni bir remote sayfa ve buna ait sidebar kaydi eklenebilir."
         />
       </section>
     </>

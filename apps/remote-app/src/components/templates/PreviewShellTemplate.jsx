@@ -1,21 +1,12 @@
-import { useLocation } from 'react-router-dom';
-import { buildPortalLinks, buildSidebarSections } from '../../app/routes/navigationConfig';
-import { Navbar, Sidebar } from '../organisms';
+import { PreviewHeader, PreviewSidebar } from '../organisms';
 
-export default function PreviewShellTemplate({ children }) {
-  const location = useLocation();
-
+export default function PreviewShellTemplate({ children, routeEntries }) {
   return (
     <div className="remote-preview">
-      <Navbar
-        appName="Remote Shell"
-        subtitle="atomic design ile ayrilan shared shell preview"
-        environmentLabel="REMOTE / 3001"
-        portalLinks={buildPortalLinks(location.pathname)}
-      />
+      <PreviewHeader />
 
       <div className="remote-preview__body">
-        <Sidebar sections={buildSidebarSections(location.pathname)} />
+        <PreviewSidebar routeEntries={routeEntries} />
 
         <main className="remote-preview__main">{children}</main>
       </div>

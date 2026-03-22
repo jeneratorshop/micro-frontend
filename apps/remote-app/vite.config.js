@@ -6,13 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: 'remote_shell',
+      name: 'remote_content',
       filename: 'remoteEntry.js',
       exposes: {
-        './AuthProvider': './src/app/providers/AuthProvider.jsx',
-        './Navbar': './src/components/organisms/Navbar.jsx',
-        './Sidebar': './src/components/organisms/Sidebar.jsx',
-        './AuthWidgets': './src/components/organisms/auth/index.js',
+        './RouteRegistry': './src/app/registry/routeRegistry.js',
       },
       shared: ['react', 'react-dom', 'react-router-dom'],
     }),

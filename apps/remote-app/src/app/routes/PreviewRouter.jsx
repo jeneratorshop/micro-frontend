@@ -1,32 +1,28 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { remoteRouteRegistry } from '../registry/routeRegistry';
 import { PreviewShellTemplate } from '../../components/templates';
-import {
-  AuthenticationPage,
-  NavigationPage,
-  OverviewPage,
-} from '../../pages';
 import HostRedirectGuard from '../guards/HostRedirectGuard';
-import { PREVIEW_ROUTE_PATHS } from './routePaths';
 
 export default function PreviewRouter() {
+  const fallbackRoute = remoteRouteRegistry[0]?.path ?? '/remote/overview';
+
   return (
     <HostRedirectGuard>
-      <PreviewShellTemplate>
+      <PreviewShellTemplate routeEntries={remoteRouteRegistry}>
         <Routes>
-          <Route path="/" element={<Navigate to={PREVIEW_ROUTE_PATHS.home} replace />} />
-          <Route
-            path={PREVIEW_ROUTE_PATHS.remoteOverview}
-            element={<OverviewPage />}
-          />
-          <Route
-            path={PREVIEW_ROUTE_PATHS.remoteNavigation}
-            element={<NavigationPage />}
-          />
-          <Route
-            path={PREVIEW_ROUTE_PATHS.remoteAuthentication}
-            element={<AuthenticationPage />}
-          />
-          <Route path="*" element={<Navigate to={PREVIEW_ROUTE_PATHS.home} replace />} />
+          <Route path="/" element={<Navigate to={fallbackRoute} replace />} />
+          {remoteRouteRegistry.map((entry) => {
+            const PageComponent = entry.component;
+
+            return (
+              <Route
+                key={entry.id}
+                path={entry.path}
+                element={<PageComponent />}
+              />
+            );
+          })}
+          <Route path="*" element={<Navigate to={fallbackRoute} replace />} />
         </Routes>
       </PreviewShellTemplate>
     </HostRedirectGuard>

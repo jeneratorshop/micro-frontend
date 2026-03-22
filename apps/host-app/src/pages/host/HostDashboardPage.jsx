@@ -1,11 +1,7 @@
 import { ActionLink, OverviewCard } from '../../components/molecules';
-import { RouteHero } from '../../components/organisms';
+import { AuthStatusCard, RouteHero, SignInPanel } from '../../components/organisms';
 import { ROUTE_PATHS } from '../../app/routes/routePaths';
 import { APP_ORIGINS } from '../../shared/constants/origins';
-import {
-  RemoteAuthStatusCard,
-  RemoteSignInPanel,
-} from '../../shared/federation';
 
 export default function HostDashboardPage() {
   return (
@@ -13,10 +9,10 @@ export default function HostDashboardPage() {
       <RouteHero
         eyebrow="Host Route"
         title="Tum routing host uygulamada, tum deneyim 3000 portunda."
-        description="Bu sayfa host tarafinda calisir. Navbar, sidebar ve authentication ise remote app'ten gelir ama kullanici tek bir React uygulamasindaymis gibi 3000 uzerinde kalir."
+        description="Bu sayfa host tarafinda calisir. Navbar, sidebar ve authentication da artik host uygulama tarafinda yonetilir."
         paths={[ROUTE_PATHS.hostDashboard, ROUTE_PATHS.remoteOverview]}
       >
-        <RemoteSignInPanel />
+        <SignInPanel />
       </RouteHero>
 
       <section className="overview-grid">
@@ -26,11 +22,11 @@ export default function HostDashboardPage() {
           detail="Kullanici host ve remote sayfalari arasinda gezerken port degistirmez."
         />
         <OverviewCard
-          title="Remote Shell"
-          description="Shell bilesenleri hala remote taraftan geliyor."
-          detail="Boylece ortak navbar, sidebar ve auth deneyimi tek kaynaktan yonetilir."
+          title="Host Owned Shell"
+          description="Navbar, sidebar ve auth host icinde tutulur."
+          detail="Remote uygulama yalnizca icerik modulleri ve menu kayitlari saglar."
         />
-        <RemoteAuthStatusCard />
+        <AuthStatusCard />
       </section>
 
       <section className="task-card">

@@ -73,6 +73,115 @@ input {
   min-height: 100vh;
 }
 
+.shell-navbar {
+  padding: 22px 28px;
+  border-bottom: 1px solid rgba(16, 33, 43, 0.08);
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.74);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.shell-navbar__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.shell-navbar__title-row h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.shell-navbar__title-row span {
+  color: #59717d;
+}
+
+.portal-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.portal-link {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(43, 122, 120, 0.08);
+  color: #245d62;
+  font-weight: 700;
+}
+
+.portal-link--active {
+  background: #245d62;
+  color: white;
+}
+
+.shell-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.environment-chip,
+.profile-chip,
+.guest-chip,
+.sidebar-card,
+.auth-card {
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(16, 33, 43, 0.08);
+  box-shadow: 0 18px 44px rgba(16, 33, 43, 0.07);
+}
+
+.environment-chip,
+.profile-chip,
+.guest-chip {
+  padding: 12px 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.environment-chip {
+  background: rgba(16, 33, 43, 0.94);
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.profile-chip span {
+  color: #5f7480;
+  font-size: 0.85rem;
+}
+
+.secondary-button,
+.primary-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.secondary-button {
+  background: #dde9e9;
+  color: #17303b;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #245d62 0%, #2b7a78 100%);
+  color: white;
+}
+
 .host-shell__body {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
@@ -85,9 +194,73 @@ input {
   gap: 24px;
 }
 
+.shell-sidebar {
+  display: grid;
+  gap: 20px;
+}
+
+.sidebar-card {
+  padding: 22px;
+}
+
+.sidebar-card--muted {
+  background: rgba(238, 247, 246, 0.94);
+}
+
+.sidebar-sections {
+  margin-top: 16px;
+  display: grid;
+  gap: 18px;
+}
+
+.sidebar-section {
+  display: grid;
+  gap: 12px;
+}
+
+.sidebar-section h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #5f7480;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 10px;
+}
+
+.sidebar-link {
+  padding: 12px 14px;
+  border-radius: 16px;
+  transition: background 160ms ease, border-color 160ms ease;
+  border: 1px solid transparent;
+  display: grid;
+  gap: 4px;
+}
+
+.sidebar-link:hover {
+  background: rgba(43, 122, 120, 0.08);
+}
+
+.sidebar-link--active {
+  background: rgba(43, 122, 120, 0.1);
+  border-color: rgba(43, 122, 120, 0.2);
+}
+
+.sidebar-link--disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.sidebar-link small {
+  color: #5f7480;
+  line-height: 1.5;
+}
+
 .hero-card,
 .task-card,
-.overview-card {
+.overview-card,
+.auth-card {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(16, 33, 43, 0.08);
@@ -183,6 +356,12 @@ input {
   align-content: start;
 }
 
+.auth-card {
+  padding: 28px;
+  display: grid;
+  gap: 14px;
+}
+
 .task-card {
   padding: 28px 32px;
   display: grid;
@@ -201,6 +380,31 @@ input {
   gap: 24px;
 }
 
+.auth-form {
+  margin-top: 18px;
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.auth-form input {
+  border: 1px solid rgba(16, 33, 43, 0.14);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: white;
+}
+
+.auth-error {
+  margin: 0;
+  color: #b42318;
+  font-weight: 600;
+}
+
 .route-note-card {
   align-content: start;
 }
@@ -213,9 +417,22 @@ input {
   color: #38505f;
 }
 
+.remote-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2b7a78;
+}
+
 @media (max-width: 1180px) {
   .host-shell__body {
     grid-template-columns: 1fr;
+  }
+
+  .shell-navbar {
+    align-items: start;
+    flex-direction: column;
   }
 
   .hero-card,

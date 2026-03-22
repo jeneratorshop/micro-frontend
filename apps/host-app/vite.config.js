@@ -8,7 +8,7 @@ export default defineConfig({
     federation({
       name: 'host_app',
       remotes: {
-        remote_shell: 'http://localhost:3001/assets/remoteEntry.js',
+        remote_content: 'http://localhost:3001/assets/remoteEntry.js',
       },
       shared: ['react', 'react-dom', 'react-router-dom'],
     }),

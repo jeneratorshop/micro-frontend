@@ -1,7 +1,6 @@
 import { OverviewCard } from '../../components/molecules';
-import { RouteHero } from '../../components/organisms';
+import { AuthStatusCard, RouteHero } from '../../components/organisms';
 import { ROUTE_PATHS } from '../../app/routes/routePaths';
-import { RemoteAuthStatusCard } from '../../shared/federation';
 
 export default function HostOrdersPage() {
   return (
@@ -9,11 +8,11 @@ export default function HostOrdersPage() {
       <RouteHero
         eyebrow="Host Orders"
         title="Domain ekranlari host uygulama icinde yasasin."
-        description="Siparis, katalog veya raporlama gibi is modulleri host tarafinda buyur. Shell ise arkada remote uygulamadan saglanmaya devam eder."
+        description="Siparis, katalog veya raporlama gibi is modulleri host tarafinda buyur. Shell ve auth da host uygulamanin yonetimindedir."
         paths={[ROUTE_PATHS.hostOrders, ROUTE_PATHS.remoteAuthentication]}
       >
         <div className="stack-panel">
-          <RemoteAuthStatusCard />
+          <AuthStatusCard />
           <article className="overview-card">
             <p className="eyebrow">Domain Scope</p>
             <h3>Host ekip yalnizca is akisina odaklanir</h3>
@@ -29,12 +28,12 @@ export default function HostOrdersPage() {
         <OverviewCard
           title="Host Kontrolu"
           description="Routing karari merkezi olarak host'ta."
-          detail="Remote sayfaya gecsen bile router host React uygulamasi tarafindan yonetilir."
+          detail="Remote sayfaya gecsen bile router ve auth host React uygulamasi tarafindan yonetilir."
         />
         <OverviewCard
           title="Remote Katki"
-          description="Auth ve ortak layout yine remote kaynaktan gelir."
-          detail="Bu da microfrontend ayrimini korurken tek uygulama hissini verir."
+          description="Remote ekip icerik ekranlarini ve sidebar kayitlarini gunceller."
+          detail="Boylece host shell sabit kalirken remote bagimsiz olarak genisleyebilir."
         />
       </section>
     </>

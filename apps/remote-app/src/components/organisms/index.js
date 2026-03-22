@@ -1,3 +1,2 @@
-export { Navbar } from './Navbar';
-export { Sidebar } from './Sidebar';
-export * from './auth';
+export { default as PreviewHeader } from './PreviewHeader';
+export { default as PreviewSidebar } from './PreviewSidebar';

@@ -1,19 +1,18 @@
-import '../../app/styles/shell.css';
 import { useAuth } from '../../app/providers/AuthProvider';
 import PortalSwitcher from '../molecules/PortalSwitcher';
 
-export function Navbar({
-  appName = 'Microfrontend Workspace',
-  subtitle = 'Remote shell tarafindan yonetilen ortak alan',
-  environmentLabel = 'REMOTE / 3001',
-  portalLinks = [],
+export default function Navbar({
+  appName = 'Host Workspace',
+  environmentLabel = 'HOST / 3000',
+  portalLinks,
+  subtitle = 'navbar, sidebar ve authentication host tarafinda yonetilir',
 }) {
-  const { isAuthenticated, user, signOut } = useAuth();
+  const { isAuthenticated, signOut, user } = useAuth();
 
   return (
     <header className="shell-navbar">
       <div>
-        <p className="remote-label">Shared Shell</p>
+        <p className="remote-label">Host Owned Shell</p>
         <div className="shell-navbar__title-row">
           <h2>{appName}</h2>
           <span>{subtitle}</span>
@@ -34,7 +33,7 @@ export function Navbar({
             </button>
           </>
         ) : (
-          <div className="guest-chip">Misafir modunda goruntuleniyor</div>
+          <div className="guest-chip">Host auth henuz acilmadi</div>
         )}
       </div>
     </header>

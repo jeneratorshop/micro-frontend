@@ -1,21 +1,29 @@
 import { useLocation } from 'react-router-dom';
+import { useRemoteRoutes } from '../../app/providers/RemoteRouteProvider';
 import { buildPortalLinks, buildSidebarSections } from '../../app/routes/navigationConfig';
-import { RemoteNavbar, RemoteSidebar } from '../../shared/federation';
+import { Navbar, Sidebar } from '../organisms';
 
 export default function ShellTemplate({ children }) {
   const location = useLocation();
+  const remoteState = useRemoteRoutes();
 
   return (
     <div className="host-shell">
-      <RemoteNavbar
+      <Navbar
         appName="Host App"
-        subtitle="tum routing host tarafinda, shell remote uygulamadan geliyor"
+        subtitle="navbar, sidebar ve authentication host tarafinda yonetilir"
         environmentLabel="HOST SPA / 3000"
-        portalLinks={buildPortalLinks(location.pathname)}
+        portalLinks={buildPortalLinks(location.pathname, remoteState.routeEntries)}
       />
 
       <div className="host-shell__body">
-        <RemoteSidebar sections={buildSidebarSections(location.pathname)} />
+        <Sidebar
+          sections={buildSidebarSections(
+            location.pathname,
+            remoteState.routeEntries,
+            remoteState,
+          )}
+        />
 
         <main className="host-main">{children}</main>
       </div>

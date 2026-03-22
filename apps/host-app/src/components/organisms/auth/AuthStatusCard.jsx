@@ -1,4 +1,3 @@
-import '../../../app/styles/shell.css';
 import { useAuth } from '../../../app/providers/AuthProvider';
 
 export default function AuthStatusCard() {
@@ -6,12 +5,12 @@ export default function AuthStatusCard() {
 
   return (
     <section className="auth-card auth-card--status">
-      <p className="remote-label">Session</p>
-      <h3>{isAuthenticated ? 'Kullanici dogrulandi' : 'Bekleyen oturum'}</h3>
+      <p className="eyebrow">Session</p>
+      <h3>{isAuthenticated ? 'Host auth aktif' : 'Misafir mod'}</h3>
       <p>
         {isAuthenticated
-          ? `${user.name} / ${user.role}`
-          : 'Host uygulama bu auth durumunu remote taraftan aliyor.'}
+          ? `${user.name} olarak giris yaptin. Bu durum host shell tarafinda tutulur.`
+          : 'Navbar, sidebar ve route korumalari host auth state ile yonetilir.'}
       </p>
     </section>
   );
