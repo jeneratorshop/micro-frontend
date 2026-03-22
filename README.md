@@ -266,6 +266,7 @@ npm.cmd run build
 - Ana gelistirme adresi `http://localhost:3000` olmalidir.
 - `3001` sadece modul preview ve `remoteEntry.js` yayini icin calisir.
 - Remote uygulama dev modda `build --watch + preview` ile ayakta tutulur.
+- `@originjs/vite-plugin-federation` ile remote tarafta native HMR yerine dev-only otomatik full reload kullanilir.
 - `react-router-dom` host ve remote tarafinda shared olarak tanimlidir.
 
 ## Sonraki Adimlar

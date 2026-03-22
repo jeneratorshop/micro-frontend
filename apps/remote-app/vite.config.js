@@ -19,6 +19,7 @@ export default defineConfig({
     strictPort: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-store',
     },
   },
   preview: {
@@ -26,6 +27,7 @@ export default defineConfig({
     strictPort: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-store',
     },
   },
   build: {
