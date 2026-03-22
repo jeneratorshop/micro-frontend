@@ -1,33 +1,75 @@
 # Microfrontend Workspace
 
-Bu repo, `3000` portunda host uygulamanin tum routing'i yonettigi ve `3001`
-portundaki remote uygulamanin ortak shell bilesenlerini sagladigi bir
+Bu repo, `3000` portunda calisan host uygulamanin tum routing'i yonettigi ve
+`3001` portundaki remote uygulamanin ortak shell bilesenlerini sagladigi bir
 microfrontend ornegidir.
 
-Kullanici deneyimi tek bir React SPA gibi davranir:
+Kullanici tarafi tek bir React SPA gibi davranir:
 
-- Host route'lari: `http://localhost:3000/host/...`
-- Remote route'lari: `http://localhost:3000/remote/...`
-- Remote preview: `http://localhost:3001/remote/...`
+- Host route'lari `http://localhost:3000/host/...`
+- Remote route'lari `http://localhost:3000/remote/...`
+- Remote preview `http://localhost:3001/remote/...`
 
-Remote uygulama arka planda su paylasilan alanlari saglar:
+Remote uygulama su paylasilan alanlari saglar:
 
 - `Navbar`
 - `Sidebar`
 - `AuthProvider`
 - `AuthWidgets`
 
-## Mimari Kurallar
+## Mimari Ozet
 
 - Tum ana routing host uygulamada kalir.
-- Kullaniciya donuk ana port `3000` olur.
+- Kullaniciya donuk ana port her zaman `3000` olur.
 - Remote uygulama shell, auth ve ortak navigasyon deneyimini tek kaynaktan verir.
 - Domain ekranlari host tarafta gelistirilir.
-- UI katmanlari atomic design mantigi ile ayrilir.
-- Provider, route, constants ve federation baglantilari `app` ve `shared`
-  altinda tutulur.
+- UI bilesenleri atomic design mantigi ile ayrilir.
+- Provider, router, guard, constants ve federation kodlari atomic katmandan ayri tutulur.
 
-## Atomic Design Klasor Yapisi
+## Atomic Design Nedir?
+
+Atomic design, arayuzu kucukten buyuge dogru katmanlara ayirarak gelistirmeyi
+kolaylastiran bir yaklasimdir. Amac, bir bilesenin hangi sorumluluga sahip
+oldugunu netlestirmek ve tekrar kullanilabilirligi artirmaktir.
+
+Bu projede katmanlar su sekilde kullanilir:
+
+- `atoms`
+  Tek bir gorevi olan, en temel UI bilesenleri.
+- `molecules`
+  Birden fazla atomun birlesimiyle olusan kucuk ama anlamli UI bloklari.
+- `organisms`
+  Ekranda gercek bir alan temsil eden buyuk bilesenler.
+- `templates`
+  Sayfa iskeletini ve layout akisini kuran katman.
+- `pages`
+  Route seviyesinde acilan ekranlar.
+
+Kisa ornek:
+
+- Atom: route chip, badge, kucuk link parcasi
+- Molecule: action link, sidebar section, portal switcher
+- Organism: navbar, sidebar, sign in panel
+- Template: host shell, remote preview shell
+- Page: dashboard, orders, authentication
+
+## Neden `app` ve `shared` Ayrica Var?
+
+Atomic design sadece UI hiyerarsisini anlatir. Gercek projede provider,
+router, guard, constants veya remote import gibi yapilar UI bileseni degildir.
+Bu nedenle bu repoda iki ek alan daha vardir:
+
+- `app/`
+  Uygulama seviyesi kodlar burada durur. Router, provider, guard, boundary ve
+  global stil kompozisyonu bu katmandadir.
+- `shared/`
+  Sabitler, mock veriler, federation importlari ve yardimci moduller burada
+  tutulur.
+
+Bu ayrim sayesinde `components/` sadece UI odakli kalir ve kod yonetimi daha
+okunur olur.
+
+## Klasor Yapisi
 
 ### Host App
 
@@ -51,6 +93,7 @@ apps/host-app/src/
     federation/
   App.jsx
   main.jsx
+  remote-modules.d.ts
   styles.css
 ```
 
@@ -67,6 +110,7 @@ apps/remote-app/src/
     atoms/
     molecules/
     organisms/
+      auth/
     templates/
   pages/
   shared/
@@ -79,21 +123,48 @@ apps/remote-app/src/
 
 ## Klasor Sorumluluklari
 
-- `app/`
-  Uygulama seviyesi yapilar. Router, provider, guard, error boundary ve global
-  stiller burada durur.
+- `app/boundaries`
+  Error boundary gibi uygulama guvenlik katmani.
+- `app/providers`
+  Auth, router veya uygulama seviyesindeki provider bilesimi.
+- `app/routes`
+  Route path'leri, navigation config ve router tanimlari.
 - `components/atoms`
-  En kucuk, tekrar kullanilabilir UI parcaciklari.
+  En kucuk tekrar kullanilabilir UI bilesenleri.
 - `components/molecules`
-  Birden fazla atomun veya kucuk UI davranisinin birlesimi.
+  Kucuk UI kombinasyonlari.
 - `components/organisms`
-  Navbar, sidebar, auth panelleri gibi anlamli buyuk bloklar.
+  Sayfanin anlamli buyuk bolumleri.
 - `components/templates`
-  Sayfalari tasiyan shell ve layout katmani.
+  Layout ve shell akisi.
 - `pages`
-  Route seviyesindeki ekranlar.
-- `shared`
-  Constants, mock data, federation importlari ve ortak yardimcilar.
+  Route bazli ekranlar.
+- `shared/constants`
+  Port, origin veya sabit degiskenler.
+- `shared/federation`
+  Remote modulleri host tarafinda cagiran katman.
+- `shared/config`
+  Demo veri veya uygulama konfigurasyonu.
+
+## Bu Repoda Atomic Design Nasil Uygulaniyor?
+
+- Host tarafta is ekranlari `pages/host` altinda bulunur.
+- Host, remote'dan gelen UI parcalarini `components/templates/ShellTemplate.jsx`
+  icinde birlestirir.
+- Remote tarafta `Navbar`, `Sidebar` ve auth bilesenleri organism seviyesinde tutulur.
+- Auth state UI icine gomulmez; `app/providers/AuthProvider.jsx` altinda ayrica yonetilir.
+- Demo kullanici listesi provider icinde degil, `shared/config/demoUsers.js`
+  dosyasinda tutulur.
+
+## Onerilen Gelistirme Akisi
+
+1. Shell veya auth degisecekse `remote-app` icinde calis.
+2. Urun ekranlari gelisecekse `apps/host-app/src/pages/host` altinda calis.
+3. Yeni route ekleyeceksen once route path dosyalarini guncelle.
+4. UI tekrar kullanilabilir olacaksa once `atoms`, sonra `molecules`, sonra
+   gerekirse `organisms` seviyesinde tasarla.
+5. Provider veya router degisiyorsa `app/` altinda tut; UI klasorune koyma.
+6. Sabit veri veya mock bilgi gerekiyorsa `shared/` altina koy.
 
 ## One Cikan Dosyalar
 
@@ -109,6 +180,8 @@ apps/remote-app/src/
   Paylasilan ust gezinme alani.
 - `apps/remote-app/src/components/organisms/Sidebar.jsx`
   Paylasilan yan navigasyon alani.
+- `apps/remote-app/src/shared/config/demoUsers.js`
+  Demo auth kullanicilari burada tutulur.
 
 ## Route Haritasi
 
@@ -120,19 +193,7 @@ apps/remote-app/src/
 - `http://localhost:3000/remote/authentication`
 - `http://localhost:3001/remote/overview`
 
-## Gelistirme Akisi
-
-1. Shell veya auth degisecekse `remote-app` icinde calis.
-2. Urun ekranlari gelisecekse `host-app/pages/host` altinda calis.
-3. Yeni route ekleyeceksen once `app/routes/routePaths.js` dosyasini guncelle.
-4. Layout veya ortak gezinme degisecekse `components/templates` ve
-   `components/organisms` altina bak.
-5. Provider, constants veya mock data degisecekse `app/providers` ve `shared`
-   klasorlerini kullan.
-
 ## Kurulum
-
-Kok klasorde:
 
 ```bash
 npm.cmd install
