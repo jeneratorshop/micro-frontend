@@ -1,47 +1,59 @@
 # Microfrontend Workspace
 
-Bu repo, `3000` portunda calisan host uygulamanin tum shell ve routing
-sahipligini aldigi, `3001` portundaki remote uygulamanin ise sadece content
-modulleri ve sidebar menu kayitlari sagladigi bir microfrontend ornegidir.
+Bu repo, var olan bir host uygulamaya sonradan ayri bir codebase olarak yeni bir
+modul entegre ediyormus gibi davranan microfrontend ornegidir.
 
-Kullanici deneyimi tek bir React SPA gibi davranir:
+Senaryo su:
 
-- Host route'lari `http://localhost:3000/host/...`
-- Remote content route'lari `http://localhost:3000/remote/...`
-- Remote preview `http://localhost:3001/remote/...`
+- `host-app`
+  Zaten yazilmis, kendi ekranlari olan ana uygulama
+- `remote-app`
+  Ayrica gelistirilen yeni modul
 
-## Yeni Sorumluluk Dagilimi
+Kullanici her seyi tek uygulama gibi gorur ve ana deneyim `3000` portunda
+yasar.
 
-### Host uygulama neyi yonetir?
+## Portlar
+
+- `3000`
+  Mevcut host uygulama
+- `3001`
+  Yeni modulun preview ve federation yayini
+
+## Bu Ornekte Kim Neyi Yonetiyor?
+
+### Host uygulama
 
 - Navbar
 - Sidebar UI
-- Authentication state
-- Login / logout aksiyonlari
+- Authentication
 - Ana router
-- Sayfa iskeleti ve shell davranisi
+- Shell davranisi
+- Kendi mevcut content ekranlari
 
-### Remote uygulama neyi yonetir?
+### Remote uygulama
 
-- Remote content sayfalari
+- Yeni modul sayfalari
 - Host sidebar'ina eklenecek menu kayitlari
 - Kendi preview ortami
-- Kendi route registry tanimi
+- Route registry
 
 Kisa ozet:
 
-- Host shell sahibidir.
-- Remote sadece content ve navigation metadata uretir.
+- Host mevcut urundur.
+- Remote sonradan takilan moduldur.
 
-## Bu Mimari Neden Iyi?
+## Gercek Hayatta Neye Benziyor?
 
-Bu ayrim sayesinde:
+Bu yapi, su senaryoya benzer:
 
-- shell davranisi tek yerde kontrol edilir
-- auth mantigi dagilmaz
-- remote ekip host shell'i bozmadan yeni sayfa ekleyebilir
-- sidebar item eklemek icin sadece remote route registry guncellenir
-- kullanici her zaman `3000` portunda kalir
+1. Elinde zaten yazilmis bir backoffice uygulamasi var.
+2. Bu uygulamanin dashboard, orders, auth, navbar ve sidebar'i zaten calisiyor.
+3. Sen yeni bir modul gelistiriyorsun.
+4. Bu modul ayri bir repo veya ayri bir ekip tarafindan gelistiriliyor.
+5. Ama son kullanici bu modulu ana uygulamanin icinde goruyor.
+
+Bu repo tam olarak bu dusunceyle duzenlendi.
 
 ## Atomic Design Nedir?
 
@@ -63,19 +75,19 @@ Bu projede katmanlar su sekilde kullanilir:
 
 ## Neden `app` ve `shared` Ayrica Var?
 
-Atomic design UI hiyerarsisini anlatir. Ama gercek projede router, provider,
-guard, federation importlari ve sabitler UI degildir.
+Atomic design UI katmanlarini anlatir. Ama router, provider, federation
+loader, constants veya guard gibi yapilar UI bileseni degildir.
 
 Bu nedenle ek olarak su alanlar vardir:
 
 - `app/`
-  Uygulama seviyesi kodlar. Router, provider, guard, boundary ve global stil
+  Uygulama seviyesi kodlar. Router, provider, registry, boundary ve global stil
   kompozisyonu burada tutulur.
 - `shared/`
-  Sabitler, mock veriler, federation loader'lari ve ortak yardimci kodlar
-  burada tutulur.
+  Sabitler, mock veriler, federation loader'lari ve yardimci kodlar burada
+  tutulur.
 
-Bu ayrim sayesinde `components/` klasoru yalnizca UI odakli kalir.
+Bu ayrim sayesinde `components/` yalnizca UI odakli kalir.
 
 ## Klasor Yapisi
 
@@ -128,88 +140,94 @@ apps/remote-app/src/
   styles.css
 ```
 
-## Atomic Design Bu Repoda Nasil Uygulaniyor?
+## Atomic Design Bu Repoda Nasil Kullaniliyor?
 
 ### Host tarafi
 
-- `app/providers/AuthProvider.jsx`
-  Host auth state burada tutulur.
-- `app/providers/RemoteRouteProvider.jsx`
-  Remote route registry burada okunur.
 - `components/organisms/Navbar.jsx`
-  Navbar host tarafinda render edilir.
+  Mevcut uygulamanin navbar'i
 - `components/organisms/Sidebar.jsx`
-  Sidebar host tarafinda render edilir.
+  Mevcut uygulamanin sidebar'i
 - `components/organisms/auth/*`
-  Login paneli ve auth durum kartlari host tarafindadir.
-- `components/templates/ShellTemplate.jsx`
-  Tüm host shell burada birlestirilir.
+  Mevcut uygulamanin auth bilesenleri
+- `pages/host/*`
+  Zaten var olan host ekranlari
+- `app/providers/RemoteRouteProvider.jsx`
+  Yeni modulun route registry'si burada okunur
 
 ### Remote tarafi
 
 - `app/registry/routeRegistry.js`
-  Remote'un host'a verdigi route ve sidebar metadata kaynagidir.
+  Yeni modulun host'a verdigi route ve menu metadata kaynagi
 - `pages/*`
-  Remote content ekranlari burada bulunur.
+  Yeni modul ekranlari
 - `components/templates/PreviewShellTemplate.jsx`
-  Remote ekibin kendi preview ortami burada kurulur.
+  Modul ekibinin kendi preview ortami
 
 ## Route Registry Mantigi
 
-Remote uygulama su tipte bir registry export eder:
+Remote uygulama su tipte kayitlar doner:
 
 ```js
 {
   id: 'remote-overview',
   path: '/remote/overview',
-  label: 'Overview',
-  description: 'Remote modulun host icindeki icerik girisi',
-  sectionTitle: 'Remote Content',
+  label: 'Modul Overview',
+  description: 'Yeni modulun host icindeki ilk ekrani',
+  sectionTitle: 'Yeni Modul / Ayri Codebase',
   component: OverviewPage
 }
 ```
 
-Host uygulama bu registry'yi okuyarak:
+Host uygulama bunu okuyarak:
 
 - route olusturur
-- sidebar item olusturur
-- remote sayfayi render eder
+- sidebar item ekler
+- sayfayi kendi shell'i icinde render eder
 
-Yani remote ekip yeni bir sayfa eklediginde host shell kodunu degistirmeden yeni
-icerigi gosterebilir.
+Yani yeni modul ayri codebase gibi gelisir ama mevcut uygulamanin icinde
+gorunur.
 
 ## One Cikan Dosyalar
 
 - `apps/host-app/src/app/providers/AuthProvider.jsx`
-  Host auth burada yonetilir.
+  Mevcut uygulamanin auth sahipligi burada
 - `apps/host-app/src/app/providers/RemoteRouteProvider.jsx`
-  Remote route registry burada yuklenir.
+  Yeni modul registry'si burada yuklenir
 - `apps/host-app/src/components/templates/ShellTemplate.jsx`
-  Host navbar ve sidebar burada birlesir.
-- `apps/host-app/src/app/routes/AppRouter.jsx`
-  Local ve remote route'lar burada tek router altinda toplanir.
+  Mevcut uygulamanin shell'i burada kurulur
+- `apps/host-app/src/pages/host/HostOrdersPage.jsx`
+  Zaten var olan host content ornegi
 - `apps/remote-app/src/app/registry/routeRegistry.js`
-  Remote sayfa listesi ve sidebar kayitlari burada tanimlanir.
+  Yeni modulun route ve menu kayitlari
 - `apps/remote-app/src/pages/OverviewPage.jsx`
-  Host icinde calisacak remote content ornegidir.
+  Ayri ekipten gelen modul content ornegi
 
 ## Route Haritasi
+
+### Mevcut host ekranlari
 
 - `http://localhost:3000/host/dashboard`
 - `http://localhost:3000/host/orders`
 - `http://localhost:3000/host/roadmap`
+
+### Yeni modul ekranlari
+
 - `http://localhost:3000/remote/overview`
 - `http://localhost:3000/remote/navigation`
 - `http://localhost:3000/remote/authentication`
+
+### Modul preview
+
 - `http://localhost:3001/remote/overview`
 
 ## Gelistirme Akisi
 
 1. Navbar, sidebar veya auth degisecekse `host-app` icinde calis.
-2. Yeni remote sayfa eklenecekse `remote-app/src/pages` altinda calis.
-3. Yeni sidebar elemani eklenecekse `remote-app/src/app/registry/routeRegistry.js` dosyasini guncelle.
-4. Yeni host sayfasi eklenecekse `host-app/src/pages/host` altinda calis.
-5. Provider, router veya federation davranisi degisecekse `app/` ve `shared/` altinda calis.
+2. Mevcut urunun yeni sayfasi yazilacaksa `host-app/src/pages/host` altinda calis.
+3. Yeni modul sayfasi yazilacaksa `remote-app/src/pages` altinda calis.
+4. Yeni modul sidebar'a bir menu ekleyecekse `remote-app/src/app/registry/routeRegistry.js` dosyasini guncelle.
+5. Federation veya router davranisi degisecekse `app/` ve `shared/` altinda calis.
 
 ## Kurulum
 
@@ -246,14 +264,14 @@ npm.cmd run build
 ## Notlar
 
 - Ana gelistirme adresi `http://localhost:3000` olmalidir.
-- `3001` remote preview ve `remoteEntry.js` yayini icin calisir.
+- `3001` sadece modul preview ve `remoteEntry.js` yayini icin calisir.
 - Remote uygulama dev modda `build --watch + preview` ile ayakta tutulur.
 - `react-router-dom` host ve remote tarafinda shared olarak tanimlidir.
 
 ## Sonraki Adimlar
 
-- Gercek login API baglantisi eklemek
-- Role-based menu yapmak
-- Route registry icin tip dogrulamasi eklemek
-- Remote content icin feature bazli klasorleme yapmak
-- Shared design token yapisi cikarmak
+- Yeni modul icin gercek API entegrasyonu eklemek
+- Route registry'yi feature bazli klasorlemek
+- Host shell icin role-based menu eklemek
+- Remote modul sayfalarini feature modullerine ayirmak
+- Gercek monorepo disi entegrasyon senaryosu icin CI/CD ornegi eklemek

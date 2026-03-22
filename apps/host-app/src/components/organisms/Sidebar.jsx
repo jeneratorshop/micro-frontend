@@ -7,7 +7,7 @@ export default function Sidebar({ sections }) {
   return (
     <aside className="shell-sidebar">
       <div className="sidebar-card">
-        <p className="remote-label">Host Navigation</p>
+        <p className="remote-label">Ana Navigasyon</p>
         <div className="sidebar-sections">
           {sections.map((section) => (
             <SidebarSection key={section.title} section={section} />
@@ -20,8 +20,8 @@ export default function Sidebar({ sections }) {
         <strong>{isAuthenticated ? 'Oturum Acik' : 'Oturum Kapali'}</strong>
         <p>
           {isAuthenticated
-            ? `${user.name} host auth uzerinden bagli.`
-            : 'Login akisi host uygulama tarafinda yonetiliyor.'}
+            ? `${user.name} core uygulama auth'u ile bagli.`
+            : 'Login akisi mevcut host uygulama tarafinda yonetiliyor.'}
         </p>
       </div>
     </aside>

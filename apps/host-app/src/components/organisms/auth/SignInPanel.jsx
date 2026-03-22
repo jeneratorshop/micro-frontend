@@ -23,10 +23,10 @@ export default function SignInPanel() {
 
   return (
     <section className="auth-card">
-      <p className="eyebrow">Host Authentication</p>
-      <h3>Oturum host uygulamada yonetilir</h3>
+      <p className="eyebrow">Core Authentication</p>
+      <h3>Mevcut uygulamanin oturumu host tarafinda yonetilir</h3>
       <p>
-        Remote icerikler bu auth kabugunun icinde calisir. Demo icin
+        Sonradan eklenen modul de ayni auth kabugunun icinde calisir. Demo icin
         `admin / 123456` kullanabilirsin.
       </p>
 

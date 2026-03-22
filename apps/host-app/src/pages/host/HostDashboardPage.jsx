@@ -7,9 +7,9 @@ export default function HostDashboardPage() {
   return (
     <>
       <RouteHero
-        eyebrow="Host Route"
-        title="Tum routing host uygulamada, tum deneyim 3000 portunda."
-        description="Bu sayfa host tarafinda calisir. Navbar, sidebar ve authentication da artik host uygulama tarafinda yonetilir."
+        eyebrow="Core Dashboard"
+        title="Bu alan mevcut host uygulamanin yazilmis ana ekranidir."
+        description="Yeni modul ayri bir codebase'de gelistirilse bile kullanici deneyimi hala bu mevcut uygulamanin icinde kalir."
         paths={[ROUTE_PATHS.hostDashboard, ROUTE_PATHS.remoteOverview]}
       >
         <SignInPanel />
@@ -17,14 +17,14 @@ export default function HostDashboardPage() {
 
       <section className="overview-grid">
         <OverviewCard
-          title="Tek SPA"
-          description="Host React Router tum route'lari yonetir."
-          detail="Kullanici host ve remote sayfalari arasinda gezerken port degistirmez."
+          title="Var Olan Uygulama"
+          description="Dashboard, siparis ve ana shell zaten host tarafinda yasar."
+          detail="Sen yeni bir modul gelistirirken mevcut urun akisini bozmadan entegre olursun."
         />
         <OverviewCard
-          title="Host Owned Shell"
-          description="Navbar, sidebar ve auth host icinde tutulur."
-          detail="Remote uygulama yalnizca icerik modulleri ve menu kayitlari saglar."
+          title="Modul Entegrasyonu"
+          description="Yeni modul ayri repo gibi gelistirilip host'a takilir."
+          detail="Host shell, auth ve navigasyon sahipligini birakmadan remote content'i icerir."
         />
         <AuthStatusCard />
       </section>
@@ -32,8 +32,8 @@ export default function HostDashboardPage() {
       <section className="task-card">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Rota Gecisleri</p>
-            <h2>Hepsi 3000 uzerinden acilir</h2>
+            <p className="eyebrow">Entegrasyon Ornegi</p>
+            <h2>Core uygulama ve yeni modul ayni deneyimde bulusur</h2>
           </div>
         </div>
 

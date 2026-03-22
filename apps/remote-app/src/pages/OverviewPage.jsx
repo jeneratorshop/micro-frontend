@@ -5,11 +5,11 @@ export default function OverviewPage() {
   return (
     <>
       <section className="preview-card preview-card--hero">
-        <p className="remote-label">Remote Uygulama</p>
-        <h1>Host shell disinda kalan content modulleri burada uretiliyor.</h1>
+        <p className="remote-label">Yeni Modul</p>
+        <h1>Bu alan ayri ekipten gelen yeni modul codebase'ini temsil eder.</h1>
         <p>
-          Bu uygulama artik shared shell saglamaz. Host tarafi yalnizca remote
-          route registry ve page content'i federation ile tuketir.
+          Bu uygulama mevcut host urununu yeniden yazmaz. Sadece sonradan
+          entegre edilen yeni modul sayfalarini ve route registry'sini saglar.
         </p>
 
         <div className="route-chip-list">
@@ -32,19 +32,19 @@ export default function OverviewPage() {
 
       <section className="preview-grid">
         <section className="preview-card">
-          <p className="remote-label">Content Ownership</p>
-          <h2>Remote ekip kendi icerigini ve menu kaydini yonetir.</h2>
+          <p className="remote-label">Ayri Codebase</p>
+          <h2>Bu modul farkli repo gibi dusunulebilir.</h2>
           <p>
-            Yeni bir remote sayfa eklediginde host uygulama bu route'u ve menu
-            elemanini registry uzerinden okuyabilir.
+            Yeni bir sayfa eklediginde host uygulama bu route'u ve sidebar
+            elemanini registry uzerinden okuyup kendi shell'inde gosterebilir.
           </p>
         </section>
         <section className="preview-card">
-          <p className="remote-label">Host Ownership</p>
-          <h2>Navbar, sidebar ve auth host tarafinda sabit kalir.</h2>
+          <p className="remote-label">Host Entegrasyonu</p>
+          <h2>Mevcut urun shell'i bozulmadan kalir.</h2>
           <p>
-            Boylece shell davranisi merkezi olur, remote ekip ise sadece kendi
-            content sinirlarinda calisir.
+            Boylece core ekip ana uygulamayi yonetir, modul ekibi ise yalnizca
+            kendi feature alanina odaklanir.
           </p>
         </section>
       </section>

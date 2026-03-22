@@ -4,7 +4,7 @@ function buildRemoteSections(pathname, remoteRouteEntries) {
   const groupedSections = new Map();
 
   remoteRouteEntries.forEach((entry) => {
-    const sectionTitle = entry.sectionTitle ?? 'Remote Content';
+    const sectionTitle = entry.sectionTitle ?? 'Yeni Modul';
 
     if (!groupedSections.has(sectionTitle)) {
       groupedSections.set(sectionTitle, []);
@@ -27,12 +27,12 @@ function buildRemoteSections(pathname, remoteRouteEntries) {
 export function buildPortalLinks(pathname, remoteRouteEntries) {
   return [
     {
-      label: 'Host Routes',
+      label: 'Core Uygulama',
       href: ROUTE_PATHS.hostDashboard,
       isActive: pathname.startsWith('/host'),
     },
     {
-      label: 'Remote Content',
+      label: 'Yeni Modul',
       href: remoteRouteEntries[0]?.path ?? ROUTE_PATHS.remoteOverview,
       isActive: pathname.startsWith('/remote'),
     },
@@ -42,24 +42,24 @@ export function buildPortalLinks(pathname, remoteRouteEntries) {
 export function buildSidebarSections(pathname, remoteRouteEntries, remoteState) {
   const sections = [
     {
-      title: 'Host Routes',
+      title: 'Core Uygulama',
       items: [
         {
           label: 'Dashboard',
           href: ROUTE_PATHS.hostDashboard,
-          description: 'Ana host karsilama ekrani',
+          description: 'Var olan uygulamanin genel bakis ekrani',
           active: pathname === ROUTE_PATHS.hostDashboard,
         },
         {
           label: 'Orders',
           href: ROUTE_PATHS.hostOrders,
-          description: 'Siparis ve operasyon alani',
+          description: 'Mevcut siparis ve operasyon modulu',
           active: pathname === ROUTE_PATHS.hostOrders,
         },
         {
           label: 'Roadmap',
           href: ROUTE_PATHS.hostRoadmap,
-          description: 'Host ekip gelisim plani',
+          description: 'Core uygulamanin gelisim plani',
           active: pathname === ROUTE_PATHS.hostRoadmap,
         },
       ],
@@ -68,12 +68,12 @@ export function buildSidebarSections(pathname, remoteRouteEntries, remoteState) 
 
   if (remoteState.isLoading) {
     sections.push({
-      title: 'Remote Content',
+      title: 'Yeni Modul',
       items: [
         {
           label: 'Yukleniyor',
           href: '#',
-          description: 'Remote route listesi okunuyor.',
+          description: 'Ayri codebase icindeki modul route listesi okunuyor.',
           disabled: true,
         },
       ],
@@ -84,12 +84,12 @@ export function buildSidebarSections(pathname, remoteRouteEntries, remoteState) 
 
   if (remoteState.error) {
     sections.push({
-      title: 'Remote Content',
+      title: 'Yeni Modul',
       items: [
         {
-          label: 'Remote baglanamadi',
+          label: 'Modul baglanamadi',
           href: '#',
-          description: '3001 portundaki remote uygulama acik olmali.',
+          description: '3001 portundaki remote modul uygulamasi acik olmali.',
           disabled: true,
         },
       ],

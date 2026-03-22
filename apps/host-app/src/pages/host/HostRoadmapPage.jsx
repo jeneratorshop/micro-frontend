@@ -6,9 +6,9 @@ export default function HostRoadmapPage() {
   return (
     <>
       <RouteHero
-        eyebrow="Host Roadmap"
-        title="Host uygulamanin sonraki adimlarini planla."
-        description="Bu route ornek bir yol haritasi ekrani. Buraya kendi dashboard, tablo ve form sayfalarini yerlestirebilirsin."
+        eyebrow="Core Roadmap"
+        title="Mevcut uygulamanin sonraki adimlarini planla."
+        description="Bu alan host ekibin kendi roadmap ekranini temsil eder. Remote modul bunun yanina sonradan eklenir."
         paths={[ROUTE_PATHS.hostRoadmap, ROUTE_PATHS.remoteOverview]}
       >
         <article className="overview-card route-note-card">
@@ -24,18 +24,18 @@ export default function HostRoadmapPage() {
       <section className="overview-grid">
         <OverviewCard
           title="1. Routing"
-          description="Tum route kararlarini host'ta topla."
-          detail="Tek SPA deneyimi bu noktada korunur."
+          description="Tum son kullanici route kararlarini host'ta topla."
+          detail="Var olan uygulama his olarak hep ana urun gibi kalir."
         />
         <OverviewCard
           title="2. Auth"
-          description="Login ve oturum yonetimini host app'te tut."
-          detail="Tum shell davranisi tek noktadan kontrol edilir."
+          description="Login ve oturum yonetimini mevcut uygulamada tut."
+          detail="Yeni moduller ayni auth kabugunun icinde calisir."
         />
         <OverviewCard
-          title="3. Domain"
-          description="Remote sadece kendi content modullerini eklesin."
-          detail="Ornegin yeni bir remote sayfa ve buna ait sidebar kaydi eklenebilir."
+          title="3. Modul"
+          description="Yeni ekip sadece kendi content modulunu gelistirsin."
+          detail="Ornegin ayri repo icinde yeni remote sayfa ve sidebar kaydi eklenebilir."
         />
       </section>
     </>

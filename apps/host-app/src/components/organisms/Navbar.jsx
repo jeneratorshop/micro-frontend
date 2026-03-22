@@ -2,10 +2,10 @@ import { useAuth } from '../../app/providers/AuthProvider';
 import PortalSwitcher from '../molecules/PortalSwitcher';
 
 export default function Navbar({
-  appName = 'Host Workspace',
+  appName = 'Commerce Core',
   environmentLabel = 'HOST / 3000',
   portalLinks,
-  subtitle = 'navbar, sidebar ve authentication host tarafinda yonetilir',
+  subtitle = 'mevcut uygulama shell sahibi, yeni modul federasyon ile eklenir',
 }) {
   const { isAuthenticated, signOut, user } = useAuth();
 
