@@ -1,5 +1,6 @@
-import '../styles.css';
-import { useAuth } from '../auth/AuthProvider';
+import '../../app/styles/shell.css';
+import { useAuth } from '../../app/providers/AuthProvider';
+import SidebarSection from '../molecules/SidebarSection';
 
 const defaultLinks = [
   { label: 'Dashboard', href: '#overview' },
@@ -7,20 +8,33 @@ const defaultLinks = [
   { label: 'Schedule', href: '#calendar' },
 ];
 
-export function Sidebar({ links = defaultLinks }) {
+function buildSections(links) {
+  return [
+    {
+      title: 'Navigation',
+      items: links.map((link) => ({
+        label: link.label,
+        href: link.href,
+        description: link.description,
+        active: link.active,
+      })),
+    },
+  ];
+}
+
+export function Sidebar({ links = defaultLinks, sections }) {
   const { isAuthenticated, user } = useAuth();
+  const navigationSections = sections?.length ? sections : buildSections(links);
 
   return (
     <aside className="shell-sidebar">
       <div className="sidebar-card">
         <p className="remote-label">Navigation</p>
-        <nav className="sidebar-nav">
-          {links.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label}
-            </a>
+        <div className="sidebar-sections">
+          {navigationSections.map((section) => (
+            <SidebarSection key={section.title} section={section} />
           ))}
-        </nav>
+        </div>
       </div>
 
       <div className="sidebar-card sidebar-card--muted">

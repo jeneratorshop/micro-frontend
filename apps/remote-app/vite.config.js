@@ -9,12 +9,12 @@ export default defineConfig({
       name: 'remote_shell',
       filename: 'remoteEntry.js',
       exposes: {
-        './AuthProvider': './src/auth/AuthProvider.jsx',
-        './Navbar': './src/components/Navbar.jsx',
-        './Sidebar': './src/components/Sidebar.jsx',
-        './AuthWidgets': './src/components/AuthWidgets.jsx',
+        './AuthProvider': './src/app/providers/AuthProvider.jsx',
+        './Navbar': './src/components/organisms/Navbar.jsx',
+        './Sidebar': './src/components/organisms/Sidebar.jsx',
+        './AuthWidgets': './src/components/organisms/auth/index.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', 'react-router-dom'],
     }),
   ],
   server: {

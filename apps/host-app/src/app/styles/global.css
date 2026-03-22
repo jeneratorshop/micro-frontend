@@ -1,0 +1,226 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #10212b;
+  background:
+    radial-gradient(circle at top left, rgba(104, 187, 177, 0.35), transparent 32%),
+    radial-gradient(circle at right, rgba(245, 196, 92, 0.24), transparent 26%),
+    linear-gradient(180deg, #f6fbfb 0%, #edf4f4 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.loading-state,
+.remote-error-state {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.redirect-card,
+.remote-error-card {
+  width: min(720px, 100%);
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(16, 33, 43, 0.08);
+  box-shadow: 0 22px 50px rgba(16, 33, 43, 0.08);
+}
+
+.redirect-card h1,
+.remote-error-card h1 {
+  margin: 0 0 12px;
+}
+
+.redirect-card p,
+.remote-error-card p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.remote-error-card code {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #17303b;
+  color: white;
+  font-weight: 700;
+}
+
+.host-shell {
+  min-height: 100vh;
+}
+
+.host-shell__body {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px;
+}
+
+.host-main {
+  display: grid;
+  gap: 24px;
+}
+
+.hero-card,
+.task-card,
+.overview-card {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(16, 33, 43, 0.08);
+  box-shadow: 0 22px 50px rgba(16, 33, 43, 0.08);
+}
+
+.hero-card {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 420px);
+  gap: 24px;
+  align-items: start;
+}
+
+.route-hero__content {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.hero-card h1,
+.task-card h2,
+.overview-card h3 {
+  margin: 0;
+}
+
+.hero-card p,
+.task-card p,
+.overview-card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2b7a78;
+}
+
+.route-pill-list,
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.route-pill {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(43, 122, 120, 0.1);
+  color: #245d62;
+  font-weight: 700;
+}
+
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #16323e;
+  color: white;
+  font-weight: 700;
+  min-height: 46px;
+}
+
+.action-link--secondary {
+  background: rgba(22, 50, 62, 0.08);
+  color: #17303b;
+  border: 1px solid rgba(22, 50, 62, 0.12);
+}
+
+.overview-grid,
+.content-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.overview-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.content-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.overview-card {
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.task-card {
+  padding: 28px 32px;
+  display: grid;
+  gap: 20px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.stack-panel {
+  display: grid;
+  gap: 24px;
+}
+
+.route-note-card {
+  align-content: start;
+}
+
+.task-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 12px;
+  color: #38505f;
+}
+
+@media (max-width: 1180px) {
+  .host-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card,
+  .overview-grid,
+  .content-grid--two {
+    grid-template-columns: 1fr;
+  }
+}

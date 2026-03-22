@@ -1,17 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-
-const demoUsers = {
-  admin: {
-    password: '123456',
-    name: 'Admin User',
-    role: 'Platform Admin',
-  },
-  editor: {
-    password: '123456',
-    name: 'Editor User',
-    role: 'Content Editor',
-  },
-};
+import { DEMO_USERS } from '../../shared/config/demoUsers';
 
 const AuthContext = createContext(null);
 
@@ -20,7 +8,7 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState('');
 
   const signIn = ({ username, password }) => {
-    const account = demoUsers[username?.trim().toLowerCase()];
+    const account = DEMO_USERS[username?.trim().toLowerCase()];
 
     if (!account || account.password !== password) {
       setError('Gecersiz kullanici adi veya sifre. Demo icin admin/123456 kullan.');

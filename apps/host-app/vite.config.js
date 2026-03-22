@@ -10,7 +10,7 @@ export default defineConfig({
       remotes: {
         remote_shell: 'http://localhost:3001/assets/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', 'react-router-dom'],
     }),
   ],
   server: {

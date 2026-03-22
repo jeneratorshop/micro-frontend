@@ -6,12 +6,27 @@ declare module 'remote_shell/Navbar' {
   export const Navbar: React.ComponentType<{
     appName?: string;
     subtitle?: string;
+    environmentLabel?: string;
+    portalLinks?: Array<{
+      label: string;
+      href: string;
+      isActive?: boolean;
+    }>;
   }>;
 }
 
 declare module 'remote_shell/Sidebar' {
   export const Sidebar: React.ComponentType<{
     links?: Array<{ label: string; href: string }>;
+    sections?: Array<{
+      title: string;
+      items: Array<{
+        label: string;
+        href: string;
+        description?: string;
+        active?: boolean;
+      }>;
+    }>;
   }>;
 }
 

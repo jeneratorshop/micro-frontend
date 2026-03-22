@@ -1,8 +1,8 @@
-import '../styles.css';
+import '../../../app/styles/shell.css';
 import { useState } from 'react';
-import { useAuth } from '../auth/AuthProvider';
+import { useAuth } from '../../../app/providers/AuthProvider';
 
-export function SignInPanel() {
+export default function SignInPanel() {
   const { signIn, error, isAuthenticated, user } = useAuth();
   const [form, setForm] = useState({
     username: 'admin',
@@ -68,22 +68,6 @@ export function SignInPanel() {
       </form>
 
       {error ? <p className="auth-error">{error}</p> : null}
-    </section>
-  );
-}
-
-export function AuthStatusCard() {
-  const { isAuthenticated, user } = useAuth();
-
-  return (
-    <section className="auth-card auth-card--status">
-      <p className="remote-label">Session</p>
-      <h3>{isAuthenticated ? 'Kullanici dogrulandi' : 'Bekleyen oturum'}</h3>
-      <p>
-        {isAuthenticated
-          ? `${user.name} / ${user.role}`
-          : 'Host uygulama bu auth durumunu remote taraftan aliyor.'}
-      </p>
     </section>
   );
 }
