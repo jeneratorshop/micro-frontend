@@ -1,0 +1,19 @@
+{
+  "name": "microfrontend-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n host,remote -c blue,green \"npm run dev --workspace host-app\" \"npm run dev --workspace remote-app\"",
+    "dev:host": "npm run dev --workspace host-app",
+    "dev:remote": "npm run dev --workspace remote-app",
+    "build": "npm run build --workspace remote-app && npm run build --workspace host-app",
+    "preview:host": "npm run preview --workspace host-app",
+    "preview:remote": "npm run preview --workspace remote-app"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

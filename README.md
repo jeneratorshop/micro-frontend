@@ -1,0 +1,47 @@
+# Microfrontend Ornek Projesi
+
+Bu ornek proje iki uygulamali bir `microfrontend` yapisi kurar:
+
+- `3000`: Host uygulama. Senin ana is ekranlarini gelistirecegin taraf.
+- `3001`: Remote uygulama. `navbar`, `sidebar` ve `authentication` burada yonetilir.
+
+## Teknolojiler
+
+- React
+- Vite
+- `@originjs/vite-plugin-federation`
+- npm workspaces
+
+## Kurulum
+
+```bash
+npm.cmd install
+```
+
+## Calistirma
+
+Tum uygulamalari ayni anda baslatmak icin:
+
+```bash
+npm.cmd run dev
+```
+
+Tek tek baslatmak icin:
+
+```bash
+npm.cmd run dev:remote
+npm.cmd run dev:host
+```
+
+## Demo Bilgisi
+
+Remote auth panelinde asagidaki hesaplari kullanabilirsin:
+
+- `admin / 123456`
+- `editor / 123456`
+
+## Mimari Ozet
+
+- Host uygulama remote taraftan `AuthProvider`, `Navbar`, `Sidebar` ve auth widgetlarini tuketir.
+- Remote uygulama tek basina da calisabilir; boylece ortak shell ayri ekip tarafindan gelistirilebilir.
+- Auth state remote tarafta tutulur ve host UI bu state'i paylasilan provider uzerinden kullanir.
