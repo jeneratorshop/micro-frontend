@@ -6,7 +6,7 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently -n host,remote -c blue,green \"npm run dev --workspace host-app\" \"npm run dev --workspace remote-app\"",
+    "dev": "concurrently -n remote,host -c green,blue \"npm run dev --workspace remote-app\" \"npm run dev --workspace host-app\"",
     "dev:host": "npm run dev --workspace host-app",
     "dev:remote": "npm run dev --workspace remote-app",
     "build": "npm run build --workspace remote-app && npm run build --workspace host-app",

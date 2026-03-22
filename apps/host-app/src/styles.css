@@ -38,6 +38,40 @@ input {
   font-weight: 700;
 }
 
+.remote-error-state {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.remote-error-card {
+  width: min(720px, 100%);
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(16, 33, 43, 0.08);
+  box-shadow: 0 22px 50px rgba(16, 33, 43, 0.08);
+}
+
+.remote-error-card h1 {
+  margin: 0 0 12px;
+}
+
+.remote-error-card p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.remote-error-card code {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #17303b;
+  color: white;
+  font-weight: 700;
+}
+
 .host-shell {
   min-height: 100vh;
 }

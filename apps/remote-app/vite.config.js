@@ -19,9 +19,17 @@ export default defineConfig({
   ],
   server: {
     port: 3001,
+    strictPort: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   preview: {
     port: 4001,
+    strictPort: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   build: {
     target: 'esnext',

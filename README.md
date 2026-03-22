@@ -26,12 +26,20 @@ Tum uygulamalari ayni anda baslatmak icin:
 npm.cmd run dev
 ```
 
+Not:
+
+- `3000`: Host uygulama
+- `3001`: Remote uygulama
+- Port doluysa Vite artik baska porta kaymaz; hata vererek seni uyarir.
+
 Tek tek baslatmak icin:
 
 ```bash
 npm.cmd run dev:remote
 npm.cmd run dev:host
 ```
+
+Remote tarafi dev modda `build + preview` ile calisir. Bunun sebebi `module federation` icin `remoteEntry.js` dosyasinin gercekten uretilmesi gerektigidir.
 
 ## Demo Bilgisi
 

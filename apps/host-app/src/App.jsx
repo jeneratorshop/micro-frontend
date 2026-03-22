@@ -1,8 +1,70 @@
-import { Suspense } from 'react';
-import { AuthProvider } from 'remote_shell/AuthProvider';
-import { Navbar } from 'remote_shell/Navbar';
-import { Sidebar } from 'remote_shell/Sidebar';
-import { AuthStatusCard, SignInPanel } from 'remote_shell/AuthWidgets';
+import { Component, Suspense, lazy } from 'react';
+
+const AuthProvider = lazy(() =>
+  import('remote_shell/AuthProvider').then((module) => ({
+    default: module.AuthProvider,
+  })),
+);
+
+const Navbar = lazy(() =>
+  import('remote_shell/Navbar').then((module) => ({
+    default: module.Navbar,
+  })),
+);
+
+const Sidebar = lazy(() =>
+  import('remote_shell/Sidebar').then((module) => ({
+    default: module.Sidebar,
+  })),
+);
+
+const SignInPanel = lazy(() =>
+  import('remote_shell/AuthWidgets').then((module) => ({
+    default: module.SignInPanel,
+  })),
+);
+
+const AuthStatusCard = lazy(() =>
+  import('remote_shell/AuthWidgets').then((module) => ({
+    default: module.AuthStatusCard,
+  })),
+);
+
+class RemoteErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error) {
+    console.error('Remote shell yuklenemedi:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="remote-error-state">
+          <section className="remote-error-card">
+            <p className="eyebrow">Remote Hatasi</p>
+            <h1>3001 portundaki remote uygulama su anda erisilemiyor.</h1>
+            <p>
+              Once remote uygulamayi, sonra host uygulamayi baslat. Bu ornek
+              yapida host, navbar, sidebar ve authentication modullerini
+              `3001` uzerinden alir.
+            </p>
+            <code>npm.cmd run dev</code>
+          </section>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 function OverviewCard({ title, description, detail }) {
   return (
@@ -80,10 +142,12 @@ function HostDashboard() {
 
 export default function App() {
   return (
-    <Suspense fallback={<div className="loading-state">Remote yukleniyor...</div>}>
-      <AuthProvider>
-        <HostDashboard />
-      </AuthProvider>
-    </Suspense>
+    <RemoteErrorBoundary>
+      <Suspense fallback={<div className="loading-state">Remote yukleniyor...</div>}>
+        <AuthProvider>
+          <HostDashboard />
+        </AuthProvider>
+      </Suspense>
+    </RemoteErrorBoundary>
   );
 }
